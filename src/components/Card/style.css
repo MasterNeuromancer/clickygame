@@ -1,0 +1,14 @@
+.tile-card {
+    text-align: center;
+    color: red;
+    font-size: 25px;
+    height: 250px;
+    background-size: 250px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+  
+.tile-card:hover {
+    cursor: pointer;
+    border: 3px solid red;
+}
