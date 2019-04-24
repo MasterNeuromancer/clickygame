@@ -21,34 +21,35 @@ class App extends Component {
 
   getRandomNumber = arr => Math.floor(Math.random() * arr.length + 1);
 
-  shuffle = (array) => {
-    var currentIndex = array.length, temporaryValue, randomIndex;
 
-    while (0 !== currentIndex) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-  
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
+  gameOver = () => {
+    if (this.state.score > this.state.tally) {
+      this.setState({tally: this.state.score}, function() {
+        console.log(this.state.tally);
+      });
     }
-  
-    return array;
+    this.state.tiles.forEach(tiles => {
+      tiles.count = 0;
+    });
+    alert(`Game Over \nscore: ${this.state.score}`);
+    this.setState({score: 0});
+    return true;
   }
 
   handleTileClick = id => {
-    this.setState({ tally: this.state.tally + 1 })
-    if (id === this.state.randomNumber) {
-      this.setState({
-        score: this.state.score + 1,
-        randomNumber: this.getRandomNumber(this.state.tiles)
-      });
-      this.state.tiles.sort(() => Math.random() - 0.5)
+    this.state.tiles.find((pic, i) => {
+      if (pic.id === id) {
+        if(tiles[i].count === 0){
+          tiles[i].count = tiles[i].count + 1;
+          this.setState({score : this.state.score + 1
+          });
+          this.state.tiles.sort(() => Math.random() - 0.5)
           return true; 
-    }
+        } else {
+          this.gameOver();
+        }
+      }
+    });
   }
 
   render() {
